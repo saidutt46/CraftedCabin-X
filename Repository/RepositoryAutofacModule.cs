@@ -10,6 +10,8 @@ namespace Repository
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ProductCategoryRepository>().As<IProductCategoryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductInventoryRepository>().As<IProductInventoryRepository>().InstancePerLifetimeScope();
         }
     }
 }

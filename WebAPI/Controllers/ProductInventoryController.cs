@@ -1,21 +1,19 @@
 ﻿using System;
-using Microsoft.AspNetCore.Authorization;
+using Core.ViewrRequests;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using Services.Interfaces;
 using WebAPI.Extensions;
-using Core.ViewrRequests;
 
 namespace WebAPI.Controllers
 {
     [Route("/api/[controller]")]
-    public class ProductCategoryController : ControllerBase
+    public class ProductInventoryController : ControllerBase
     {
-        private readonly IProductCategoryService _productCategorySerive;
+        private readonly IProductInventoryService _productInventorySerive;
 
-        public ProductCategoryController(IProductCategoryService productCategorySerive)
+        public ProductInventoryController(IProductInventoryService productInventoryService)
         {
-            _productCategorySerive = productCategorySerive;
+            _productInventorySerive = productInventoryService;
         }
 
         [HttpGet]
@@ -23,7 +21,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var response = await _productCategorySerive.ListAsync();
+                var response = await _productInventorySerive.ListAsync();
                 return Ok(response);
             }
             catch (Exception ex)
@@ -34,14 +32,14 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetCategory(Guid id)
+        public async Task<IActionResult> GetInventory(Guid id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             try
             {
-                var response = await _productCategorySerive.GetById(id);
+                var response = await _productInventorySerive.GetById(id);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -50,33 +48,14 @@ namespace WebAPI.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Route("{id}/items")]
-        //public async Task<IActionResult> GetItemsByCategory(Guid id)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState.GetErrorMessages());
-
-        //    try
-        //    {
-        //        var response = await _productCategorySerive.GetItemsByCategory(id);
-        //        return Ok(response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-
-        //}
-
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateProductCategoryModel request)
+        public async Task<IActionResult> Create([FromBody] AddProductInventoryModel request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             try
             {
-                var response = await _productCategorySerive.Add(request);
+                var response = await _productInventorySerive.Add(request);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -87,13 +66,13 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] CreateProductCategoryModel request)
+        public async Task<IActionResult> Update(Guid id, [FromBody] AddProductInventoryModel request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
             try
             {
-                var response = await _productCategorySerive.Update(id, request);
+                var response = await _productInventorySerive.Update(id, request);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -110,7 +89,7 @@ namespace WebAPI.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
             try
             {
-                var response = await _productCategorySerive.Delete(id);
+                var response = await _productInventorySerive.Delete(id);
                 return Ok(response);
             }
             catch (Exception ex)

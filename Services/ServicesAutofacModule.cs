@@ -12,7 +12,8 @@ namespace Services
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ProductCategoryService>().As<IProductCategoryService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductInventoryService>().As<IProductInventoryService>().InstancePerLifetimeScope();
         }
     }
 }
-

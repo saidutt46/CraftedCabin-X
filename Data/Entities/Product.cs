@@ -29,4 +29,3 @@ namespace Data.Entities
         public required ProductInventory ProductInventory { get; set; }
     }
 }
-
