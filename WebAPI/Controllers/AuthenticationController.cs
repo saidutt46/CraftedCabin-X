@@ -98,7 +98,11 @@ namespace WebAPI.Controllers
                 {
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = model.Username,
-                    Email = model.Email
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    DateOfBirth = model.DateOfBirth,
+                    DateJoined = DateTime.UtcNow
                 };
                 var result = await userManager.CreateAsync(user, model.Password!);
                 if (!result.Succeeded)
@@ -132,7 +136,11 @@ namespace WebAPI.Controllers
             {
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username,
-                Email = model.Email
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                DateJoined = DateTime.UtcNow
             };
             var result = await userManager.CreateAsync(user, model.Password!);
             if (!result.Succeeded)
@@ -160,4 +168,3 @@ namespace WebAPI.Controllers
         }
     }
 }
-
