@@ -9,13 +9,11 @@
   <ItemGroup>
     <None Remove="Entities\" />
     <None Remove="Shared\" />
-    <None Remove="Helpers\" />
     <None Remove="Context\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Shared\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Context\" />
   </ItemGroup>
   <ItemGroup>

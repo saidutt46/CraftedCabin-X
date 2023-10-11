@@ -10,10 +10,10 @@ namespace Data.Entities
     {
         [Required]
         [MaxLength(255)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [MaxLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         // Navigation property for associated Products
         public ICollection<Product> Products { get; set; } = new List<Product>();

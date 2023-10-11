@@ -10,23 +10,23 @@ namespace Data.Entities
     {
         [Required]
         [MaxLength(255)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         [MaxLength(500)]
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public string SKU { get; set; }
+        public required string SKU { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
         public Guid ProductCategoryId { get; set; }
-        public ProductCategory ProductCategory { get; set; }
+        public ProductCategory? ProductCategory { get; set; }
 
         // Navigation property for the associated ProductInventory
-        public ProductInventory ProductInventory { get; set; }
+        public required ProductInventory ProductInventory { get; set; }
     }
 }
 

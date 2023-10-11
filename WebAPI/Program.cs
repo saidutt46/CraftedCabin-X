@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Core.Helpers;
 using Data.Context;
@@ -8,9 +10,18 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.Win32;
+using Repository;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
+// Register the Autofac module
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+// Register services directly with Autofac here. Don't
+// call builder.Populate(), that happens in AutofacServiceProviderFactory.
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new ServicesAutofacModule()));
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new RepositoryAutofacModule()));
+
 
 
 // Add services to the container.
