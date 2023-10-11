@@ -1,34 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { AppRoutingModule, MaterialModule } from '@modules';
+import { ConsoleLoggingService, LOGGING_SERV_TOKEN, NOTIFICATION_SERV_TOKEN, NotificationService } from '@services';
+import { HomeComponent, LoginComponent, NavbarComponent, RegisterComponent } from '@components';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    NavbarComponent,
+    LoginComponent,
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    MaterialModule
   ],
-  providers: [],
+  providers: [
+    { provide: NOTIFICATION_SERV_TOKEN, useClass: NotificationService },
+    { provide: LOGGING_SERV_TOKEN, useClass: ConsoleLoggingService },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
