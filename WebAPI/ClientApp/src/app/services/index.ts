@@ -5,3 +5,4 @@ export * from './products.service';
 export * from './user-address.service';
 export * from './user-authentication.service';
 export * from './logging.service';
+export * from './color-scheme.service';

@@ -1,18 +1,20 @@
-<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+<mat-toolbar class="global-custom-toolbar" fxLayoutAlign="space-between center">
     <div>
-      <span class="brand-text">EL'PESTO</span>
+      <span class="brand-text">Crafted Cabin</span>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <button mat-button (click)="userLogin()">LOGIN</button>
-      <button mat-button (click)="userRegister()">REGISTER</button>
+      <button color="primary" mat-button (click)="userLogin()">LOGIN</button>
+      <button color="accent" mat-button (click)="userRegister()">REGISTER</button>
       <button class="menu-button-option" mat-icon-button><mat-icon>account_circle</mat-icon></button>
       <button class="menu-button-option" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
     </div>
   </mat-toolbar>
   
   <mat-menu #menu="matMenu">
-    <mat-slide-toggle class="theming-option" (click)="$event.stopPropagation()"
-      color="accent">
-      Dark Mode
-    </mat-slide-toggle>
+    <mat-label>Select theme</mat-label>
+    <mat-select (selectionChange)="updateTheme($event)">
+      <mat-option *ngFor="let theme of themes" [value]="theme.name">
+        <mat-icon mat-list-icon>{{theme.icon}}</mat-icon> {{theme.name | titlecase}}
+      </mat-option>
+    </mat-select>
   </mat-menu>
