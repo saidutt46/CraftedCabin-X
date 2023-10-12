@@ -9,6 +9,11 @@ import { AppRoutingModule, MaterialModule } from '@modules';
 import { ConsoleLoggingService, LOGGING_SERV_TOKEN, NOTIFICATION_SERV_TOKEN, NotificationService } from '@services';
 import { HomeComponent, LoginComponent, NavbarComponent, RegisterComponent } from '@components';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { UserManagementState } from './ngxs-store/user-management/user-management.state';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReactiveFormsModule,
     AppRoutingModule,
     FlexLayoutModule,
-    MaterialModule
+    MaterialModule,
+    NgxsModule.forRoot([
+      UserManagementState
+    ]),
+    NgxsFormPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({key: 'userauth'})
   ],
   providers: [
     { provide: NOTIFICATION_SERV_TOKEN, useClass: NotificationService },

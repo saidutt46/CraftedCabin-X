@@ -15,7 +15,7 @@ using WebAPI.Extensions;
 
 namespace WebAPI.Controllers
 {
-    [Route("user")]
+    [Route("/api")]
     [ApiController]
     public class AuthenticateController : ControllerBase
     {

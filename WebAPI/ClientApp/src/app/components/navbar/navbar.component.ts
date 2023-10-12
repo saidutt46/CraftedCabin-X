@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { ColorSchemeService } from '@services';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-navbar',
@@ -19,13 +21,20 @@ export class NavbarComponent {
     }
   ];
 
-  constructor(private colorSchemeService: ColorSchemeService) { }
+  constructor(
+    private colorSchemeService: ColorSchemeService,
+    private dialog: MatDialog) { }
 
   userLogin() {
 
   }
 
   userRegister() {
+    this.dialog.open(RegisterComponent, {
+      width: '30%',
+      height: 'auto',
+      panelClass: 'custom-dialog'
+    });
   }
 
   updateTheme(theme: MatSelectChange) {
