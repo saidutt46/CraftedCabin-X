@@ -1,1 +1,18 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+    <div>
+      <span class="brand-text">EL'PESTO</span>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-button (click)="userLogin()">LOGIN</button>
+      <button mat-button (click)="userRegister()">REGISTER</button>
+      <button class="menu-button-option" mat-icon-button><mat-icon>account_circle</mat-icon></button>
+      <button class="menu-button-option" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+    </div>
+  </mat-toolbar>
+  
+  <mat-menu #menu="matMenu">
+    <mat-slide-toggle class="theming-option" (click)="$event.stopPropagation()"
+      color="accent">
+      Dark Mode
+    </mat-slide-toggle>
+  </mat-menu>

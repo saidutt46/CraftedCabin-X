@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule, MaterialModule } from '@modules';
 import { ConsoleLoggingService, LOGGING_SERV_TOKEN, NOTIFICATION_SERV_TOKEN, NotificationService } from '@services';
 import { HomeComponent, LoginComponent, NavbarComponent, RegisterComponent } from '@components';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HomeComponent, LoginComponent, NavbarComponent, RegisterComponent } fro
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    FlexLayoutModule,
     MaterialModule
   ],
   providers: [
