@@ -1,21 +1,40 @@
-<mat-toolbar class="global-custom-toolbar" fxLayoutAlign="space-between center">
-    <div>
-      <span class="brand-text">Crafted Cabin</span>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="end center">
-      <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button (click)="userLogin()">Login</button>
-      <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button (click)="userRegister()">Register</button>
-      <button class="user-auth-action-btn" *ngIf="isAuthenticated$ | async" color="accent" mat-button (click)="logout()">Logout</button>
-      <button class="menu-button-option" mat-icon-button><mat-icon>account_circle</mat-icon></button>
-      <button class="menu-button-option" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
-    </div>
-  </mat-toolbar>
-  
-  <mat-menu #menu="matMenu">
-    <mat-label>Select theme</mat-label>
-    <mat-select (selectionChange)="updateTheme($event)">
-      <mat-option *ngFor="let theme of themes" [value]="theme.name">
-        <mat-icon mat-list-icon>{{theme.icon}}</mat-icon> {{theme.name | titlecase}}
-      </mat-option>
-    </mat-select>
-  </mat-menu>
+<mat-toolbar color="primary" class="global-custom-toolbar" fxLayoutAlign="space-between center">
+  <div>
+    <span class="brand-text">
+      <span class="black-box">Crafted</span>
+      <span class="white-box">CABIN</span>
+    </span>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button
+      (click)="userLogin()">Login</button>
+    <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button
+      (click)="userRegister()">Create Account</button>
+    <button class="user-auth-action-btn" *ngIf="isAuthenticated$ | async" color="accent" mat-button
+      (click)="logout()">Logout</button>
+    <button class="menu-icon-btn" mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button class="menu-icon-btn" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <mat-menu class="settings-menu" (click)="$event.stopPropagation()" #menu="matMenu">
+      <div>
+        <button mat-menu-item>
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin Settings</span>
+        </button>
+        <ng-template *ngIf="currentTheme" matMenuContent>
+          <button (click)="updateTheme(currentTheme)" mat-menu-item>
+            <mat-icon>dark_mode</mat-icon>
+            <span>{{currentTheme | titlecase}} Theme</span>
+          </button>
+        </ng-template>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </div>
+    </mat-menu>
+  </div>
+</mat-toolbar>

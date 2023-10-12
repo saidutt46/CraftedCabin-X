@@ -51,6 +51,7 @@ export class ColorSchemeService {
 
     update(scheme: string) {
         this._setColorScheme(scheme);
+        console.warn('update', scheme);
         // Remove the old color-scheme class
         this.renderer.removeClass(document.body, this.colorSchemePrefix + (this.colorScheme === 'dark' ? 'light' : 'dark'));
         // Add the new / current color-scheme class

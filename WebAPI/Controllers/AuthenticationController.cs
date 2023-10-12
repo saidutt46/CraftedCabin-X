@@ -115,6 +115,13 @@ namespace WebAPI.Controllers
 
                     return StatusCode(StatusCodes.Status500InternalServerError, new AuthResponse { Status = "Error", Message = message });
                 }
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                if (await roleManager.RoleExistsAsync(UserRoles.User))
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.User);
+                }
 
                 return Ok(new AuthResponse { Success = true, Status = "Success", Message = "User created successfully!" });
             }

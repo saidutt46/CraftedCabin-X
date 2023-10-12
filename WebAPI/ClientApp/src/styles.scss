@@ -9,7 +9,7 @@ $highlight: rgba(235, 235, 235, 0.733);
 html, body { height: 100%; }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Roboto Mono', monospace;
 }
 
 
@@ -33,12 +33,6 @@ body {
   background-color: rgb(62, 210, 247);
 }
 
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
 
 // $inside-primary: mat-palette($mat-light-blue);
 // $inside-accent: mat-palette($mat-light-blue);

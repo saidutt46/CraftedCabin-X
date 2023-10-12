@@ -1,0 +1,22 @@
+.home-page-container {
+    width: 100% !important;
+    height: calc(100vh - 64px) !important;
+
+    .home-page-lhs {
+        // background-color: yellow;
+        .hero-text {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.2em;
+            padding: 16px;
+        }
+    }
+
+    .home-page-rhs {
+        flex-grow: 1;
+        width: 50%;
+        background-image: url('/assets/images/artisan3.jpg');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+}

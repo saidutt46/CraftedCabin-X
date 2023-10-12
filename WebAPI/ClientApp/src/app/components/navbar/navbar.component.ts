@@ -16,6 +16,7 @@ import { UserManagementActions } from 'src/app/ngxs-store/user-management/user-m
 })
 export class NavbarComponent {
   @Select(UserManagementSelector.isAuthenticated) isAuthenticated$: Observable<boolean> | undefined;
+  currentTheme: string | null = localStorage.getItem('prefers-color');
 
   public themes = [
     {
@@ -51,8 +52,9 @@ export class NavbarComponent {
     });
   }
 
-  updateTheme(theme: MatSelectChange) {
-    this.colorSchemeService.update(theme.value);
+  updateTheme(theme: string) {
+    const val = theme === 'dark' ? 'light' : 'dark';
+    this.colorSchemeService.update(val);
   }
 
   logout() {

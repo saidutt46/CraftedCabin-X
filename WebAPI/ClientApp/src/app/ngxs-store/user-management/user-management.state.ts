@@ -4,6 +4,7 @@ import { Inject, Injectable } from "@angular/core";
 import { NOTIFICATION_SERV_TOKEN, NotificationService, UserAuthenticationService } from "@services";
 import { catchError, throwError, tap } from "rxjs";
 import { UserManagementActions } from "./user-management.action";
+import jwt_decode from "jwt-decode";
 
 @State<UserManagementStateModel>({
     name: 'userauth',
@@ -41,7 +42,8 @@ import { UserManagementActions } from "./user-management.action";
               patchState({
                 userProfile: res.userProfile,
                 isAuthenticated: token ? true : false,
-                formLoading: false
+                formLoading: false,
+                isAdmin: this.userRoles.includes('Admin')
               });
               this.notifier.successNotification(`${res.userProfile.userName.toUpperCase()}: successfully logged In`);
           }, err => {
@@ -58,7 +60,7 @@ import { UserManagementActions } from "./user-management.action";
         patchState({
           formLoading: true
         });
-        return this.authService.registerUser(payload).pipe(
+        return this.authService.registerAdmin(payload).pipe(
           catchError((x) => {
             return throwError(x);
           }),
@@ -88,4 +90,12 @@ import { UserManagementActions } from "./user-management.action";
         this.notifier.successNotification(`successfully logged out`);
         return;
       }
+
+      get userRoles(): string[] {
+        const token = localStorage.getItem('token');  // Assume the token is stored in localStorage
+        if (!token) return [];
+        const decodedToken: any = jwt_decode(token);
+        return decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || [];
+      }
+
   }
