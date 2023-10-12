@@ -10,4 +10,8 @@ export namespace UserManagementActions {
         static readonly type = '[UserManagement] Register';
         constructor(public payload: UserRegisterModel) { }
     }
+
+    export class Logout {
+        static readonly type = '[UserManagement] Logout';
+    }
  }

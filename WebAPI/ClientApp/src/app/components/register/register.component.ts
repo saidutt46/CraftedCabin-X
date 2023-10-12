@@ -22,7 +22,7 @@ export class RegisterComponent {
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
-    phoneNumber: ['', [Validators.minLength(10), Validators.maxLength(12)]],
+    phoneNumber: ['', [Validators.minLength(10), Validators.maxLength(12), Validators.pattern(/^\d{10,12}$/)]],
     dateOfBirth: ['', [Validators.required]]
   });
 

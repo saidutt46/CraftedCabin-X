@@ -3,6 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { ColorSchemeService } from '@services';
 import { RegisterComponent } from '../register/register.component';
+import { LoginComponent } from '../login/login.component';
+import { UserManagementSelector } from 'src/app/ngxs-store/user-management/user-management.selector';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { UserManagementActions } from 'src/app/ngxs-store/user-management/user-management.action';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +15,8 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
+  @Select(UserManagementSelector.isAuthenticated) isAuthenticated$: Observable<boolean> | undefined;
+
   public themes = [
     {
         name: 'dark',
@@ -23,22 +30,36 @@ export class NavbarComponent {
 
   constructor(
     private colorSchemeService: ColorSchemeService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private store: Store) { }
 
   userLogin() {
-
+    this.dialog.open(LoginComponent, {
+      width: '30%',
+      height: 'auto',
+      panelClass: 'custom-dialog',
+      autoFocus: false
+    });
   }
 
   userRegister() {
     this.dialog.open(RegisterComponent, {
       width: '30%',
       height: 'auto',
-      panelClass: 'custom-dialog'
+      panelClass: 'custom-dialog',
+      autoFocus: false
     });
   }
 
   updateTheme(theme: MatSelectChange) {
     this.colorSchemeService.update(theme.value);
+  }
+
+  logout() {
+    this.store.dispatch(new UserManagementActions.Logout()).pipe().subscribe(res => {
+      console.log(res);
+      console.log('logged out');
+    });
   }
 
 }

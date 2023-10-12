@@ -75,5 +75,17 @@ import { UserManagementActions } from "./user-management.action";
           })
         );
       }
-  }
 
+      @Action([UserManagementActions.Logout])
+      logout({patchState}: StateContext<UserManagementStateModel>) {
+        patchState({
+            userProfile: null,
+            isAuthenticated: false,
+            token: null,
+            isAdmin: false,
+            expiration: null
+        });
+        this.notifier.successNotification(`successfully logged out`);
+        return;
+      }
+  }

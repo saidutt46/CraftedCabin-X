@@ -3,8 +3,9 @@
       <span class="brand-text">Crafted Cabin</span>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <button color="primary" mat-button (click)="userLogin()">LOGIN</button>
-      <button color="accent" mat-button (click)="userRegister()">REGISTER</button>
+      <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button (click)="userLogin()">Login</button>
+      <button class="user-auth-action-btn" *ngIf="!(isAuthenticated$ | async)" mat-button (click)="userRegister()">Register</button>
+      <button class="user-auth-action-btn" *ngIf="isAuthenticated$ | async" color="accent" mat-button (click)="logout()">Logout</button>
       <button class="menu-button-option" mat-icon-button><mat-icon>account_circle</mat-icon></button>
       <button class="menu-button-option" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
     </div>

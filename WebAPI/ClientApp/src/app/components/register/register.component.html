@@ -2,9 +2,15 @@
 <div class="loading-section" *ngIf="loading$ | async">
   <mat-spinner [diameter]="40"></mat-spinner>
 </div>
-<div class="custom-dialog-body">
-    <h2 mat-dialog-title>REGISTER NEW USER</h2>
 
+<div fxFlex class="custom-auth-dialog" fxLayout="column">
+  <div class="custom-dialog-header" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+    <span mat-dialog-title>User Registration</span>
+    <button mat-icon-button mat-dialog-close class="close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="custom-dialog-body">
     <mat-dialog-content>
       <div fxFlex fxLayout="column" fxLayoutGap="8px">
         <form [formGroup]="addForm" fxFlex fxLayout="column" fxLayoutGap="8px">
@@ -39,10 +45,12 @@
         </form>
       </div>
     </mat-dialog-content>
-    
+
     <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
       <button mat-raised-button (click)="close()">CLOSE</button>
       <button mat-raised-button color="primary" (click)="saveUser()">SAVE</button>
-    </mat-dialog-actions>    
+    </mat-dialog-actions>
+
+  </div>
 
 </div>
