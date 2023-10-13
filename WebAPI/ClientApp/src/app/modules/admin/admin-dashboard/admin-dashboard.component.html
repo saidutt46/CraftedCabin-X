@@ -1,0 +1,32 @@
+<div fxFlex fxLayout="row" class="admin-dashboard-container">
+    <div class="admin-dashboard-lhs">
+        <mat-card class="admin-navbar">
+            <mat-nav-list class="admin-navigation-container" fxFlex fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="start center">
+                <mat-list-item fxLayoutAlign="start center" class="custom-admin-menu-item" (click)="navigate('/admin')" [ngClass]="isActive('/admin') ? 'active-link' : ''" class="nav-item">
+                    <mat-icon class="admin-nav-icon" matListIcon>dashboard</mat-icon>
+                    <span class="nav-text">Dashboard</span>
+                </mat-list-item>
+                <mat-list-item fxLayoutAlign="start center" class="custom-admin-menu-item" (click)="navigate('/admin/products')" [ngClass]="isActive('/admin/products') ? 'active-link' : ''" class="nav-item">
+                    <mat-icon class="admin-nav-icon" matListIcon>shopping_cart</mat-icon>
+                    <span class="nav-text">Products</span>
+                </mat-list-item>
+                <mat-list-item fxLayoutAlign="start center" class="custom-admin-menu-item" (click)="navigate('/admin/orders')" [ngClass]="isActive('/admin/orders') ? 'active-link' : ''" class="nav-item">
+                    <mat-icon class="admin-nav-icon" matListIcon>receipt</mat-icon>
+                    <span class="nav-text">Orders</span>
+                </mat-list-item>
+                <mat-list-item fxLayoutAlign="start center" class="custom-admin-menu-item" (click)="navigate('/admin/inventory')" [ngClass]="isActive('/admin/inventory') ? 'active-link' : ''" class="nav-item">
+                    <mat-icon class="admin-nav-icon" matListIcon>store</mat-icon>
+                    <span class="nav-text">Inventory</span>
+                </mat-list-item>
+                <mat-list-item fxLayoutAlign="start center" class="custom-admin-menu-item" (click)="navigate('/admin/user-management')" [ngClass]="isActive('/admin/user-management') ? 'active-link' : ''" class="nav-item">
+                    <mat-icon class="admin-nav-icon" matListIcon>group</mat-icon>
+                    <span class="nav-text">User Management</span>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-card>
+    </div>
+    <div fxFlex class="admin-dashboard-rhs">
+        <!-- Your content here -->
+        <app-dashboard-panel></app-dashboard-panel>
+    </div>
+</div>

@@ -10,8 +10,17 @@
 
 .custom-auth-dialog {
   .custom-dialog-header {
-    background: #f5f5f5;
+    background: #2d2d2d;
     border-bottom: 1px solid #e0e0e0;
+
+    .dialog-title {
+      color: white;
+      font-weight: 300;
+    }
+
+    .close-button {
+      color: white;
+    }
   }
 
   .custom-dialog-body {

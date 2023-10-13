@@ -1,0 +1,42 @@
+.admin-dashboard-container {
+    width: 100%;
+    height: calc(100vh - 64px) !important;
+    padding: 16px;
+    // background-color: yellow;
+}
+
+.admin-navbar {
+    width: 300px;
+    height: 800px;
+    border-radius: 16px;
+    color: whitesmoke !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* Adjust as needed */
+}
+
+.active-link {
+    background-color: #f36bab; /* Adjust color as needed */
+    font-weight: 700 !important;
+    border-radius: 8px;
+
+    .nav-text {
+        color: black;
+    }
+}
+.nav-item {
+    padding: 8px 16px; /* Adjust padding as needed */
+}
+
+.admin-navigation-container {
+    padding: 16px;
+}
+
+.admin-nav-icon {
+    font-size: 18px;
+    line-height: inherit;
+    vertical-align: bottom;
+    margin-right: 20px;
+}
+
+.nav-text {
+    color: rgb(91, 91, 91);
+}

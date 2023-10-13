@@ -12,15 +12,12 @@
       (click)="userRegister()">Create Account</button>
     <button class="user-auth-action-btn" *ngIf="isAuthenticated$ | async" color="accent" mat-button
       (click)="logout()">Logout</button>
-    <button class="menu-icon-btn" mat-icon-button>
-      <mat-icon>account_circle</mat-icon>
-    </button>
     <button class="menu-icon-btn" mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu class="settings-menu" (click)="$event.stopPropagation()" #menu="matMenu">
       <div>
-        <button mat-menu-item>
+        <button (click)="openAdminPanel()" *ngIf="(isAuthenticated$ | async) && (isAdmin$ | async)" mat-menu-item>
           <mat-icon>admin_panel_settings</mat-icon>
           <span>Admin Settings</span>
         </button>
@@ -30,7 +27,7 @@
             <span>{{currentTheme | titlecase}} Theme</span>
           </button>
         </ng-template>
-        <button mat-menu-item>
+        <button *ngIf="isAuthenticated$ | async" mat-menu-item>
           <mat-icon>notifications_off</mat-icon>
           <span>Disable alerts</span>
         </button>

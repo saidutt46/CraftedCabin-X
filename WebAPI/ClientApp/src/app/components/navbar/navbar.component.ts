@@ -8,6 +8,7 @@ import { UserManagementSelector } from 'src/app/ngxs-store/user-management/user-
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { UserManagementActions } from 'src/app/ngxs-store/user-management/user-management.action';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,8 @@ import { UserManagementActions } from 'src/app/ngxs-store/user-management/user-m
 })
 export class NavbarComponent {
   @Select(UserManagementSelector.isAuthenticated) isAuthenticated$: Observable<boolean> | undefined;
+  @Select(UserManagementSelector.isAdmin) isAdmin$: Observable<boolean> | undefined;
+
   currentTheme: string | null = localStorage.getItem('prefers-color');
 
   public themes = [
@@ -32,7 +35,8 @@ export class NavbarComponent {
   constructor(
     private colorSchemeService: ColorSchemeService,
     private dialog: MatDialog,
-    private store: Store) { }
+    private store: Store,
+    private router: Router) { }
 
   userLogin() {
     this.dialog.open(LoginComponent, {
@@ -61,7 +65,13 @@ export class NavbarComponent {
     this.store.dispatch(new UserManagementActions.Logout()).pipe().subscribe(res => {
       console.log(res);
       console.log('logged out');
+      this.router.navigate(['/home']);
     });
+  }
+
+  openAdminPanel() {
+    console.log('admin panel');
+    this.router.navigate(['/admin']);
   }
 
 }

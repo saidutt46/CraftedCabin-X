@@ -26,6 +26,7 @@
       "@modules": ["src/app/modules/index.ts"],
       "@directives": ["src/app/directives/index.ts"],
       "@pipes": ["src/app/pipes/index.ts"],
+      "@admin-components": ["src/app/modules/admin/index.ts"],
     },
     "useDefineForClassFields": false
   },

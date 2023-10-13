@@ -15,6 +15,11 @@ export class UserManagementSelector {
   }
 
   @Selector([UserManagementState])
+  static isAdmin(state: UserManagementStateModel) {
+    return state.isAdmin;
+  }
+
+  @Selector([UserManagementState])
   static formLoading(state: UserManagementStateModel) {
     return state.formLoading;
   }

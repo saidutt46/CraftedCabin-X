@@ -1,0 +1,22 @@
+.dashboard-panel-container {
+    padding: 32px;
+    width: 100% !important;
+
+    .page-details-section {
+        // background-color: yellow;
+    }
+    .dashboard-title {
+        font-size: 32px;
+    }
+
+    .dashboard-tagline {
+        font-size: 14px;
+        padding-top: 8px;
+        color: rgb(109, 109, 109);
+    }
+
+    .notification-icon {
+        font-size: 32px;
+        color: rgb(109, 109, 109);
+    }
+}

@@ -45,7 +45,7 @@ import jwt_decode from "jwt-decode";
                 formLoading: false,
                 isAdmin: this.userRoles.includes('Admin')
               });
-              this.notifier.successNotification(`${res.userProfile.userName.toUpperCase()}: successfully logged In`);
+              this.notifier.successNotification(`Welcome to the Cabin!,  ${res.userProfile.userName.toUpperCase()}`);
           }, err => {
             patchState({
               formLoading: false
@@ -68,7 +68,7 @@ import jwt_decode from "jwt-decode";
               patchState({
                 formLoading: false
               });
-              this.notifier.successNotification(`${res.message}`);
+              this.notifier.successNotification(`Welcome, Weave Yourself into Our Community!`);
           }, err => {
             patchState({
               formLoading: false
@@ -87,7 +87,7 @@ import jwt_decode from "jwt-decode";
             isAdmin: false,
             expiration: null
         });
-        this.notifier.successNotification(`successfully logged out`);
+        this.notifier.successNotification(`logged out`);
         return;
       }
 

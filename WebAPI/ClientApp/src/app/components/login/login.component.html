@@ -5,7 +5,7 @@
 
 <div fxFlex class="custom-auth-dialog" fxLayout="column">
   <div class="custom-dialog-header" fxFlex fxLayout="row" fxLayoutAlign="space-between center">
-    <span mat-dialog-title>Ok, let's get In</span>
+    <span class="dialog-title" mat-dialog-title>Hop Back on the Handcraft Hype!</span>
     <button mat-icon-button mat-dialog-close class="close-button" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
@@ -14,10 +14,10 @@
   <div class="custom-dialog-body">
     <mat-dialog-content>
       <form autocomplete="off" fxFlex fxLayoutGap="16px" fxLayout="column" [formGroup]="loginForm">
-        <mat-form-field color="primary">
+        <mat-form-field class="custom-input-field" color="primary" appearance="outline">
           <input required id="username" matInput formControlName="username" placeholder="username" autofocus>
         </mat-form-field>
-        <mat-form-field color="primary">
+        <mat-form-field class="custom-input-field" color="primary" appearance="outline">
           <input required id="password" matInput formControlName="password" [type]="hide ? 'text' : 'password' "
             placeholder="password">
           <mat-icon matSuffix (click)="hide = !hide">

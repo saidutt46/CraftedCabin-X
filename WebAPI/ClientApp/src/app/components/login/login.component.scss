@@ -9,11 +9,25 @@
 
 
 .custom-auth-dialog {
-    .custom-dialog-header {
-        background: #f5f5f5;
-        border-bottom: 1px solid #e0e0e0;
+  .custom-dialog-header {
+    background: #2d2d2d;
+    border-bottom: 1px solid #e0e0e0;
+
+    .dialog-title {
+      color: white;
+      font-weight: 300;
     }
-    .custom-dialog-body {
-        padding: 16px;
+
+    .close-button {
+      color: white;
     }
+  }
+
+  .custom-dialog-body {
+    padding: 16px;
+  }
+
+  .custom-dialog-actions {
+    padding-top: 16px !important;
+  }
 }
