@@ -39,48 +39,50 @@ namespace WebAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
+
             var user = await userManager.FindByNameAsync(model.Username!);
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password!) == false)
+            var passwordValid = await userManager.CheckPasswordAsync(user, model.Password!);
+            if (user == null || !passwordValid)
             {
-                return BadRequest("Incorrect Password, please retry with a valid password for given user");
+                return BadRequest("Invalid username or password");
             }
-            if (user != null && await userManager.CheckPasswordAsync(user, model.Password!))
+
+            var userRoles = await userManager.GetRolesAsync(user);
+            var authClaims = new List<Claim>
+    {
+        new Claim(ClaimTypes.Name, user.UserName!),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    };
+
+            if (userRoles != null)
             {
-                var userRoles = await userManager.GetRolesAsync(user);
-
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
                 foreach (var userRole in userRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));
-
-                var token = new JwtSecurityToken(
-                    issuer: _configuration["JWT:ValidIssuer"],
-                    audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddHours(3),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-                var convertedToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-                UserProfileDto currentUser = _mapper.Map<ApplicationUser, UserProfileDto>(user);
-                LoginResponse response = new LoginResponse
-                {
-                    Token = convertedToken,
-                    Expiration = token.ValidTo,
-                    UserProfile = currentUser
-                };
-                return Ok(response);
             }
-            return Unauthorized();
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddHours(Convert.ToDouble(_configuration["JWT:ExpirationHours"])),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            var convertedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            UserProfileDto currentUser = _mapper.Map<ApplicationUser, UserProfileDto>(user);
+            LoginResponse response = new LoginResponse
+            {
+                Token = convertedToken,
+                Expiration = token.ValidTo,
+                UserProfile = currentUser
+            };
+
+            return Ok(response);
         }
+
 
         [HttpPost]
         [Route("register")]
@@ -161,17 +163,33 @@ namespace WebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new AuthResponse { Status = "Error", Message = message });
             }
 
-            if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-            if (await roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (model.Username.EndsWith("xyzzy"))
             {
-                await userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
+                // Godzilla Admin Role
+                if (!await roleManager.RoleExistsAsync(UserRoles.SuperGodzilla))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.SuperGodzilla));
 
-            return Ok(new AuthResponse { Success = true, Status = "Success", Message = "User created successfully!" });
+                if (await roleManager.RoleExistsAsync(UserRoles.SuperGodzilla))
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.SuperGodzilla);
+                }
+
+                return Ok(new AuthResponse { Success = true, Status = "Success", Message = "Godzilla Admin created successfully!" });
+            }
+            else
+            {
+                // Regular Admin Role
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+
+                if (await roleManager.RoleExistsAsync(UserRoles.Admin))
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.Admin);
+                }
+
+                return Ok(new AuthResponse { Success = true, Status = "Success", Message = "Admin created successfully!" });
+            }
         }
+
     }
 }

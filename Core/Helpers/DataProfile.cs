@@ -19,6 +19,8 @@ namespace Core.Helpers
             CreateMap<CreateProductCategoryModel, ProductCategory>();
             CreateMap<CreateProductModel, Product>();
             CreateMap<AddProductInventoryModel, ProductInventory>();
+            CreateMap<CabinStore, CabinStoreDto>();
+            CreateMap<CreateStoreModel, CabinStore>();
         }
     }
 }
