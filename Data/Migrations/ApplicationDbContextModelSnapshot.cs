@@ -30,6 +30,9 @@ namespace Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("CabinStoreId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -103,10 +106,49 @@ namespace Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.CabinStore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("StoreOwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreOwnerId")
+                        .IsUnique();
+
+                    b.ToTable("CabinStore");
+                });
+
             modelBuilder.Entity("Data.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CabinStoreId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
@@ -141,6 +183,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CabinStoreId");
+
                     b.HasIndex("ProductCategoryId");
 
                     b.ToTable("Products");
@@ -152,6 +196,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CabinStoreId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -159,7 +206,6 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -173,6 +219,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CabinStoreId");
+
                     b.HasIndex("Name");
 
                     b.ToTable("product_category");
@@ -182,6 +230,9 @@ namespace Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CabinStoreId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
@@ -202,6 +253,8 @@ namespace Data.Migrations
                         .HasDefaultValue(0);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CabinStoreId");
 
                     b.HasIndex("ProductId")
                         .IsUnique();
@@ -392,24 +445,61 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Entities.CabinStore", b =>
+                {
+                    b.HasOne("Data.Entities.ApplicationUser", "StoreOwner")
+                        .WithOne("CabinStore")
+                        .HasForeignKey("Data.Entities.CabinStore", "StoreOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreOwner");
+                });
+
             modelBuilder.Entity("Data.Entities.Product", b =>
                 {
+                    b.HasOne("Data.Entities.CabinStore", "CabinStore")
+                        .WithMany("Products")
+                        .HasForeignKey("CabinStoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("ProductCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("CabinStore");
+
                     b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("Data.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("Data.Entities.CabinStore", "CabinStore")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CabinStoreId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("CabinStore");
                 });
 
             modelBuilder.Entity("Data.Entities.ProductInventory", b =>
                 {
+                    b.HasOne("Data.Entities.CabinStore", "CabinStore")
+                        .WithMany()
+                        .HasForeignKey("CabinStoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Data.Entities.Product", "Product")
                         .WithOne("ProductInventory")
                         .HasForeignKey("Data.Entities.ProductInventory", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CabinStore");
 
                     b.Navigation("Product");
                 });
@@ -478,7 +568,16 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.ApplicationUser", b =>
                 {
+                    b.Navigation("CabinStore");
+
                     b.Navigation("UserAddresses");
+                });
+
+            modelBuilder.Entity("Data.Entities.CabinStore", b =>
+                {
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Data.Entities.Product", b =>

@@ -25,12 +25,27 @@ namespace Data.Context
                 .WithOne(ua => ua.ApplicationUser)
                 .HasForeignKey(ua => ua.ApplicationUserId)
                 .OnDelete(DeleteBehavior.Cascade);  // Configures cascade delete
+                                                    // Configuration for CabinStore
+            builder.Entity<CabinStore>(entity =>
+            {
+                // Association to ApplicationUser
+                entity.HasOne(cs => cs.StoreOwner)
+                      .WithOne(u => u.CabinStore)
+                      .HasForeignKey<CabinStore>(cs => cs.StoreOwnerId);
+
+                // Indexing for performance
+                entity.HasIndex(e => e.StoreOwnerId).IsUnique();
+            });
 
             builder.Entity<Product>(entity =>
             {
                 entity.HasOne(p => p.ProductCategory)
                       .WithMany(pc => pc.Products)
                       .HasForeignKey(p => p.ProductCategoryId);
+                // Association to CabinStore
+                entity.HasOne(p => p.CabinStore)
+                      .WithMany(cs => cs.Products)
+                      .HasForeignKey(p => p.CabinStoreId);
             });
 
             // Configuration for ProductCategory
@@ -41,20 +56,29 @@ namespace Data.Context
 
                 // Optionally, if you want to enforce a maximum length constraint at the database level for the Description field
                 entity.Property(e => e.Description).HasMaxLength(500);
+                // Association to CabinStore
+                entity.HasOne(pc => pc.CabinStore)
+                      .WithMany(cs => cs.ProductCategories)
+                      .HasForeignKey(pc => pc.CabinStoreId)
+                      .IsRequired(false)  // This makes the foreign key optional
+                      .OnDelete(DeleteBehavior.SetNull);  // This sets the foreign key to null if the associated CabinStore is deleted
+
             });
 
             // Configuration for ProductInventory
             builder.Entity<ProductInventory>(entity =>
             {
-                // Configuration for the one-to-one relationship between Product and ProductInventory
-                entity.HasOne(pi => pi.Product)
-                      .WithOne(p => p.ProductInventory)
-                      .HasForeignKey<ProductInventory>(pi => pi.ProductId);
-
                 // Optionally, if you want to ensure that Quantity is always non-negative
                 entity.Property(pi => pi.Quantity)
                       .HasDefaultValue(0)
                       .HasColumnType("int CHECK (Quantity >= 0)");
+
+                // Configuration for the one-to-one relationship between Product and ProductInventory
+                entity.HasOne(pi => pi.Product)
+                      .WithOne(p => p.ProductInventory)
+                      .HasForeignKey<ProductInventory>(pi => pi.ProductId)
+                      .OnDelete(DeleteBehavior.Restrict);  // Change this to Restrict or SetNull as per your business logic
+
             });
 
             builder.Entity<UserAddress>(entity =>
@@ -70,6 +94,7 @@ namespace Data.Context
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductInventory> ProductInventories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<CabinStore> CabinStore { get; set; }  // DbSet for CabinStore
 
         public override int SaveChanges()
         {
