@@ -17,5 +17,8 @@ namespace Data.Entities
 
         // Navigation property for associated Products
         public ICollection<Product> Products { get; set; } = new List<Product>();
+        // Optional: if you want to associate categories with a store
+        public Guid? CabinStoreId { get; set; }
+        public CabinStore? CabinStore { get; set; }
     }
 }

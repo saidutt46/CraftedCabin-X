@@ -14,6 +14,9 @@ namespace Data.Entities
 
         // Foreign key property for the associated Product
         public Guid ProductId { get; set; }
+        // New property for Store association if needed
+        public Guid CabinStoreId { get; set; }
+        public CabinStore? CabinStore { get; set; }
     }
 }
 

@@ -15,6 +15,9 @@ namespace Data.Entities
         public DateTime DateJoined { get; set; }
 
         public ICollection<UserAddress>? UserAddresses { get; set; }
+        // Association to CabinStore
+        public Guid? CabinStoreId { get; set; }
+        public CabinStore? CabinStore { get; set; }
 
     }
 }

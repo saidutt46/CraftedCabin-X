@@ -27,5 +27,8 @@ namespace Data.Entities
 
         // Navigation property for the associated ProductInventory
         public required ProductInventory ProductInventory { get; set; }
+        // New property for Store association
+        public Guid CabinStoreId { get; set; }
+        public CabinStore? CabinStore { get; set; }
     }
 }
