@@ -23,6 +23,8 @@ namespace Core.ViewrRequests
         public decimal Price { get; set; }
 
         public Guid ProductCategoryId { get; set; }
+        public Guid CabinStoreId { get; set; }
+
     }
 }
 

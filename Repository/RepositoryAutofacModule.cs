@@ -12,6 +12,7 @@ namespace Repository
             builder.RegisterType<ProductCategoryRepository>().As<IProductCategoryRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProductInventoryRepository>().As<IProductInventoryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CabinStoreRepository>().As<ICabinStoreRepository>().InstancePerLifetimeScope();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace Services
             builder.RegisterType<ProductCategoryService>().As<IProductCategoryService>().InstancePerLifetimeScope();
             builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
             builder.RegisterType<ProductInventoryService>().As<IProductInventoryService>().InstancePerLifetimeScope();
+            builder.RegisterType<CabinStoreService>().As<ICabinStoreService>().InstancePerLifetimeScope();
+
         }
     }
 }
