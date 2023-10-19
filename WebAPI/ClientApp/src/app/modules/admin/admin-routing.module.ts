@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from "@angular/router";
-import { AdminDashboardComponent, CategoryManagementComponent, InventoryManagementComponent,
+import { AdminDashboardComponent, CategoryManagementComponent, DashboardPanelComponent, InventoryManagementComponent,
   OrdersManagementComponent, ProductManagementComponent, UserManagementComponent } from "@admin-components";
 import { NgModule } from "@angular/core";
 
@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: 'categories', component: CategoryManagementComponent },
       { path: 'inventory', component: InventoryManagementComponent },
       { path: 'orders', component: OrdersManagementComponent },
-      { path: '', redirectTo: '', pathMatch: 'full' } // Default route
+      { path: '', component: DashboardPanelComponent, pathMatch: 'full' } // Default route
     ]
   }
 ];
